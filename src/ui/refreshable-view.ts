@@ -25,6 +25,12 @@ export abstract class DataviewRefreshableRenderer extends MarkdownRenderChild {
         this.registerEvent(this.app.workspace.on("dataview:refresh-views", this.maybeRefresh));
         // ...or when the DOM is shown (sidebar expands, tab selected, nodes scrolled into view).
         this.register(this.container.onNodeInserted(this.maybeRefresh));
+        // ...or when the selected leaf changes.
+        this.registerEvent(this.app.workspace.on("active-leaf-change", this.refresh));
+    }
+
+    refresh = () => {
+        this.render();
     }
 
     maybeRefresh = () => {
